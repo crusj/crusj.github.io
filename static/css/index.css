@@ -467,3 +467,7 @@ blockquote:last-child {
 		padding-left: 25px;
 	}
 }
+.pagination {
+	width: 100%;
+	text-align: center;
+}

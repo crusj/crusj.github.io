@@ -11,7 +11,7 @@ description: Jianglong's Ideas & Blogs
 # url: "http://yourdomain.com" # the base hostname & protocol for your site
 # twitter_username: jekyllrb
 github_username: jianglong1992
-permalink: /:year/:month/:day/:categories/:title/
+permalink: /:categories/:year/:month/:day/:title/
 #########################################
 # for duoshuo.com commenting system, uncomment following line if you do not want to include duoshuo.com. 
 #duoshuo_shortname: lixizhi
@@ -23,8 +23,11 @@ disqus_url: "https://jianglong1992.github.io"
 
 # Build settings
 markdown: kramdown
-
+paginate: 8
 # highlight
 # highlighter: pygments
 # highlighter: rouge
 # highlighter: false
+plugins:
+    - jekyll-paginate
+    - jekyll-categories
