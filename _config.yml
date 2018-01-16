@@ -1,5 +1,5 @@
 # Site settings
-title: Jianglong1992's Personal Website
+title: jianglong1992's Personal Website
 email: 296769589@foxmail.com
 description: Jianglong's Ideas & Blogs
 # > # this means to ignore newlines until "baseurl:"
@@ -11,7 +11,7 @@ description: Jianglong's Ideas & Blogs
 # url: "http://yourdomain.com" # the base hostname & protocol for your site
 # twitter_username: jekyllrb
 github_username: jianglong1992
-permalink: /:year/:month/:day/:title/
+permalink: /:year/:month/:day/:categories/:title/
 #########################################
 # for duoshuo.com commenting system, uncomment following line if you do not want to include duoshuo.com. 
 #duoshuo_shortname: lixizhi
