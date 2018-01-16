@@ -1,0 +1,70 @@
+<style>
+    #hidePicture{
+        margin-top: 20px;
+    }
+</style>
+<canvas id="hidePicture" width="300" height="400">
+</canvas>
+<script>
+    $(function () {
+        let img = new Image();
+        img.src = "/static/img/canvas_bg.jpg";
+        img.onload = function () {
+            let t = $("#hidePicture"),
+                ctx = t[0].getContext("2d"),
+                canvas = ctx.canvas;
+            t.css({
+                "background": "url(/static/img/zard.jpg)",
+                "background-position":"-80px -100px ",
+                "background-repeat":"no-repeat",
+            });
+            ctx.rect(0, 0, canvas.width, canvas.height);
+            let pattern = ctx.createPattern(img, "repeat");
+            ctx.fillStyle = pattern;
+            ctx.fill();
+            let Light = function (ctx, r) {
+                this.ctx = ctx;
+                this.canvas = this.ctx.canvas;
+                this.oldImage = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+                this.r = r;
+                this.x = 0;
+                this.y = 0;
+                this.light = function () {
+                    //线性渐变
+                    this.ctx.save();
+                    this.ctx.beginPath();
+                    this.ctx.globalCompositeOperation = "destination-out";
+                    let ra = this.ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+                    ra.addColorStop(0, 'rgba(255,255,255,1');
+                    ra.addColorStop(0.7, 'rgba(255,255,255,1');
+                    ra.addColorStop(1, 'rgba(255,255,255,0');
+                    this.ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                    this.ctx.fillStyle = ra;
+                    this.ctx.fill();
+                    this.ctx.restore();
+                };
+                this.init = function () {
+                    let self = this;
+                    this.canvas.onmousemove = function (e) {
+                        e.preventDefault();
+                        self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
+                        self.ctx.putImageData(self.oldImage, 0, 0);
+                        self.x = e.clientX - $(self.canvas).offset().left;
+                        self.y = e.clientY - $(self.canvas).offset().top + $(document).scrollTop();
+                        self.light();
+
+                    };
+                    this.canvas.onmouseout = function (e) {
+                        e.preventDefault();
+                        self.ctx.clearRect(0, 0, self.canvas.width, self.canvas.height);
+                        ctx.rect(0, 0, canvas.width, canvas.height);
+                        ctx.fillStyle = pattern;
+                        ctx.fill();
+                    }
+                }
+            };
+            let light = new Light(ctx, 100);
+            light.init();
+        }
+    });
+</script>

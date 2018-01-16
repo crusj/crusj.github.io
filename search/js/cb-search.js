@@ -82,4 +82,9 @@
             }
         }).error(function(data, b) { console.log("json解析错误，搜索功能暂不可用，请检查文章title，确保不含有换行等特殊符号"); });
 
+        $("#cb-search-btn").hover(function () {
+            $(this).attr("src","/search/img/cb-search-active.png");
+        },function () {
+            $(this).attr("src","/search/img/cb-search.png");
+        })
     });
