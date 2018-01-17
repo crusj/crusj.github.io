@@ -147,3 +147,7 @@ function loadingChange() {
         },1000)
     }
 }
+//浏览器刷新事件
+window.onbeforeunload = function(){
+    $(document).scrollTop(0);
+};
