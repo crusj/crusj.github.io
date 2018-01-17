@@ -141,7 +141,9 @@ document.onreadystatechange = loadingChange;
 
 function loadingChange() {
     if (document.readyState == "complete") {
-        $("body").css("overflow","scroll");
-        $("#my_loading").remove();
+        setTimeout(function(){
+            $("body").css("overflow","scroll");
+            $("#my_loading").remove();
+        },1000)
     }
 }
