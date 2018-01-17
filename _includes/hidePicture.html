@@ -8,15 +8,16 @@
 <script>
     $(function () {
         let img = new Image();
+        let t = $("#hidePicture");
         img.src = "/static/img/canvas_bg.jpg";
         img.onload = function () {
-            let t = $("#hidePicture"),
-                ctx = t[0].getContext("2d"),
+                let ctx = t[0].getContext("2d"),
                 canvas = ctx.canvas;
             t.css({
                 "background": "url(/static/img/zard.jpg)",
                 "background-position":"-80px -100px ",
                 "background-repeat":"no-repeat",
+                "width":$(".col-sm-3").width()
             });
             ctx.rect(0, 0, canvas.width, canvas.height);
             let pattern = ctx.createPattern(img, "repeat");

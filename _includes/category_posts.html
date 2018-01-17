@@ -1,29 +1,44 @@
+<link rel="stylesheet" href="/static/plugins/pagination/css/jPages.css">
+<link rel="stylesheet" href="/static/plugins/pagination/css/animate.css">
+<style>
+    .holder{
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+    }
+    .holder a{
+        font-size: 16px;
+        text-decoration: none;
+    }
+    .holder a:hover{
+        background: none;
+    }
+</style>
 <div class="post-list-header">
    All Posts
 </div>
 <div class="post-list-body">
-    <div class="all-posts" post-cate="All">
-        {% for post in paginator.posts %}
+    <ul class="all-posts" post-cate="All" id="itemContainer" style="list-style: none">
+        {% for post in site.posts %}
+        <li>
         <a class="post-list-item" href="{{ post.url | prepend: site.baseurl }}">
             <h2>
                 {{ post.title }}
             </h2>
             <span class="">{{ post.date | date: "%b %-d, %Y" }}</span>
         </a>
+        </li>
         {% endfor %}
-        <!-- Pagination links -->
-        <div class="pagination">
-            {% if paginator.previous_page %}
-            <a href="{{ paginator.previous_page_path }}" class="previous">上一页</a>
-            {% else %}
-            <span class="previous">上一页</span>
-            {% endif %}
-            <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
-            {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path }}" class="next">下一页</a>
-            {% else %}
-            <span class="next ">下一页</span>
-            {% endif %}
-        </div>
-    </div>
+    </ul>
+    <div class="holder"></div>
 </div>
+<script src="/static/plugins/pagination/js/jPages.js"></script>
+<script>
+    $(function(){
+        $("div.holder").jPages({
+            containerID:"itemContainer",
+            perPage:8,
+            animation:"pulse"
+        })
+    })
+</script>
