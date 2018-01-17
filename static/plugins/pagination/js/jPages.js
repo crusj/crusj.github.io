@@ -40,7 +40,7 @@
   function Plugin(element, options) {
     this.options = $.extend({}, defaults, options);
 
-    this._container = $("#" + this.options.containerID);
+    this._container = $("." + this.options.containerID);
     if (!this._container.length) return;
 
     this.jQwindow = $(window);

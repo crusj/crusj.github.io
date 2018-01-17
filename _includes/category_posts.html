@@ -1,44 +1,77 @@
 <link rel="stylesheet" href="/static/plugins/pagination/css/jPages.css">
 <link rel="stylesheet" href="/static/plugins/pagination/css/animate.css">
 <style>
-    .holder{
+    .holder {
         text-align: center;
         height: 40px;
         line-height: 40px;
     }
-    .holder a{
+
+    .holder a {
         font-size: 16px;
         text-decoration: none;
     }
-    .holder a:hover{
+
+    .holder a:hover {
         background: none;
     }
 </style>
-<div class="post-list-header">
-   All Posts
+<div class="cate-container cate-all">
+
+    <div class="post-list-header">
+        All Posts
+    </div>
+    <div class="post-list-body">
+        <ul class="all-posts itemContainer cate_all" data-type="all" post-cate="All" style="list-style: none">
+            {% for post in site.posts %}
+            <li>
+                <a class="post-list-item" href="{{ post.url | prepend: site.baseurl }}">
+                    <h2>
+                        {{ post.title }}
+                    </h2>
+                    <span class="">{{ post.date | date: "%b %-d, %Y" }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="holder"></div>
+    </div>
 </div>
-<div class="post-list-body">
-    <ul class="all-posts" post-cate="All" id="itemContainer" style="list-style: none">
-        {% for post in site.posts %}
-        <li>
-        <a class="post-list-item" href="{{ post.url | prepend: site.baseurl }}">
-            <h2>
-                {{ post.title }}
-            </h2>
-            <span class="">{{ post.date | date: "%b %-d, %Y" }}</span>
-        </a>
-        </li>
-        {% endfor %}
-    </ul>
-    <div class="holder"></div>
+{% for category in site.categories %}
+{% assign cate_name = category[0] %}
+<div class="cate-container cate-{{ cate_name }}">
+    <div class="post-list-header">
+        {{ cate_name }}
+    </div>
+    <div class="post-list-body">
+        <ul class="posts itemContainer cate_{{ cate_name }}" data-type="{{ cate_name }}" post-cate="All" style="list-style: none">
+            {% for post in site.categories[cate_name] %}
+            <li>
+                <a class="post-list-item" href="{{ post.url | prepend: site.baseurl }}">
+                    <h2>
+                        {{ post.title }}
+                    </h2>
+                    <span class="">{{ post.date | date: "%b %-d, %Y" }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="holder"></div>
+    </div>
 </div>
+{% endfor %}
 <script src="/static/plugins/pagination/js/jPages.js"></script>
 <script>
-    $(function(){
-        $("div.holder").jPages({
-            containerID:"itemContainer",
-            perPage:8,
-            animation:"pulse"
+    $(function () {
+        $("div.holder").each(function(){
+            var type = $(this).prev().attr('data-type');
+            $(this).jPages({
+            containerID: 'cate_'+type,
+            perPage: 8,
+            animation: "pulse"
         })
+        });
+        $(".cate-container").hide();
+        $(".cate-all").show();
     })
 </script>
