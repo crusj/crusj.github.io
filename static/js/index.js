@@ -1,7 +1,7 @@
 /**
  * 页面ready方法
  */
-$(document).ready(function() {
+$(document).ready(function () {
 
     generateContent();
     backToTop();
@@ -11,6 +11,7 @@ $(document).ready(function() {
  * load方法，页面的加载完成后触发
  * {fixFooterInit();} 固定Footer栏
  */
+
 /*$(window).load(function() {
     fixFooterInit();
 });*/
@@ -29,7 +30,7 @@ function fixFooterInit() {
 
     fixFooter(footerHeight, footerMarginTop); //fix footer at the beginning
 
-    $(window).resize(function() { //when resize window, footer can auto get the postion
+    $(window).resize(function () { //when resize window, footer can auto get the postion
         fixFooter(footerHeight, footerMarginTop);
     });
 
@@ -85,7 +86,7 @@ function getFooterMarginTop() {
  */
 function backToTop() {
     //滚页面才显示返回顶部
-    $(window).scroll(function() {
+    $(window).scroll(function () {
         if ($(window).scrollTop() > 100) {
             $("#top").fadeIn(500);
         } else {
@@ -93,14 +94,14 @@ function backToTop() {
         }
     });
     //点击回到顶部
-    $("#top").click(function() {
+    $("#top").click(function () {
         $("html").animate({
             scrollTop: "0px"
         }, 300);
     });
 
     //初始化tip
-    $(function() {
+    $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 }
@@ -123,5 +124,24 @@ function generateContent() {
             'data-spy': 'affix',
             'data-offset': '50'
         });*/
+    }
+}
+
+$(function () {
+    var url = location.href;
+    if (url.indexOf('?') !== -1) {
+        var url_array = url.split('?');
+        var cate = url_array.pop();
+        $(".cate-" + cate).show();
+    } else {
+        $(".cate-all").show();
+    }
+});
+document.onreadystatechange = loadingChange;
+
+function loadingChange() {
+    if (document.readyState == "complete") {
+        $("body").css("overflow","scroll");
+        $("#my_loading").remove();
     }
 }
