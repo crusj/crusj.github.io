@@ -141,13 +141,14 @@ document.onreadystatechange = loadingChange;
 
 function loadingChange() {
     if (document.readyState == "complete") {
-        setTimeout(function(){
-            $("body").css("overflow","scroll");
-            $("#my_loading").remove();
-        },1000)
+        setTimeout(function () {
+            $("body").css("overflow", "scroll");
+            $("#my_loading").hide(300);
+            $("#my_load").hide();
+            $("#loading_text").hide();
+        }, 1000)
     }
 }
 //浏览器刷新事件
 window.onbeforeunload = function(){
-    $(document).scrollTop(0);
 };
