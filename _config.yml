@@ -28,6 +28,3 @@ paginate: 8
 # highlighter: pygments
 # highlighter: rouge
 # highlighter: false
-plugins:
-    - jekyll-paginate
-    - jekyll-categories
