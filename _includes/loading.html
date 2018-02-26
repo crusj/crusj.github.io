@@ -12,7 +12,7 @@
         position: fixed;
         width: 100%;
         height: 10%;
-        z-index: 10000;
+        z-index: 10001;
         top:45%;
     }
     #loading_text {
@@ -22,7 +22,10 @@
         width: 100%;
         height: 100%;
         z-index: 10000;
-        background: transparent;
+        background: url("/static/img/load.jpg") no-repeat center;
+        background-size: 100% 100%;
+
+
     }
 
 </style>
@@ -68,7 +71,7 @@
                 "要有最朴素的生活和最遥远的梦想#即使明天#天寒地冻#路远马亡"
 
 
-            ],ctx.canvas.width-150,100,25,'FangSong','rgba(0,0,0,0.5)',true)
+            ],ctx.canvas.width-150,100,25,'FangSong',"white",true)
       });
       $("#my_load").shCircleLoader({
             color: "orange",
