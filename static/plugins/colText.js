@@ -16,7 +16,7 @@ let ColText = function (ctx) {
 
     this.fillDraw = function (fontsize, fontFamily) {
         if (this.shadowOpen) {
-            this.shadow('grey', 2, 2, 1);
+            this.shadow('black', 2, 2, 1);
         }
 
         //随机文字
