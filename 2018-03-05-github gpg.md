@@ -1,0 +1,44 @@
+---
+layout: post
+title: github 利用gpg对提交进行签名验证
+category: git
+tags: github
+---
+#### gpg(gun privacy guard)
+**大概过程**
+
+利用gpg生成钥匙对，用私钥对文件签名，github用公钥进行验证
+
+----
+
+#### 具体步骤(仅在Linux或者mac)
+
+**1.生成钥匙对**
+
+`gpg --gen-key`
+
+**2.导出公钥**
+
+`gpg -a --export ID > pub.asc`
+
+**3.github配置gpg keys**
+
+将步骤2中的pub.asc的内容复制到制定
+sfd
+asdfsd
+sdfsdf
+{% asset_img gpgKeys.png %}
+
+**4.配置git**
+
+`git config --global -e`
+
+{% asset_img gitGpgConf.png%}
+
+在仓库中 `gpg config commit.gpgsign = false`
+
+#### 其他
+* gpg 查看keyid  `gpg -k --keyid-format short | long`
+* gpg 导出私钥  `gpg -a --export-secret-key key-id > secret.asc`
+* gpg 删除钥匙对  `gpg --delete-secret-keys keys-id`  &&  `gpg --delete-keys keys-id`
+

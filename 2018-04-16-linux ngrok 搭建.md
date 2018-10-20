@@ -1,0 +1,68 @@
+---
+layout: post
+title: 通过ngrok自己动手搭建内网穿透服务
+category: others
+tags: ngrok
+---
+这几天一直在折腾ngrok，记录下整个过程
+
+最先怕影响服务器，是在docker里进行安装的，实例跑的是ubuntu16.04
+
+**大概流程图**
+
+{% asset_img flow.png %}
+
+* 访问服务器`(80|443)`端口 ，apache按规则对需要进行代理的请求发送给docker
+* docker是与服务`8080`端口进行了映射，而docker内的ngrok服务监听了`8080`端口
+* ngrok服务设置与ngrok客户端建立隧道的端口是`4443`
+* ngrok将apache代理的请求按规则转发给ngrok客户端，客户端再与本地端口进行转发关联
+* 最终将处理结果依次返回
+
+**用docker出现的问题**
+
+由于ngrok需要根据域名的不同对代理进行转发，配置了hosts文件，例如`wx.ngrok.com` 到 `0.0.0.0:8080`
+。docker内开启ngrok服务后，客户端成功进行了连接，但当进行url请求的时候始终无法从ngrok服务端转发到ngrok客户端，
+最先是用`80`端口报不是tsl/ssl握手，最后换做`443`报什么read message EOF之类，研究很久最终放弃
+
+
+**最终环境**
+
+`ubuntu14.04 golang 1.7`
+
+1. 最先利用ubuntu `apt install golang` 安装的是1.5的go环境,报了一个错，经过搜索是golang版本问题，最后通过下载包的方式安装了`1.6`解决
+2. 按照教程进行了一系列操作[参考教程](https://blog.csdn.net/sdfgsdfg1444/article/details/72793313),编译linux,windows客户端成功
+3. 当编译Mac客户端后运行报错什么什么runtime之类的，macos 10.13,又折腾半天不行，然后怀疑go语言版本低了，然后又下载了`1.7`进行了解压放在/usr/local目录下
+4. 配置go的环境变量GOROOT后，进行客户端编译，报错`C source files not allowed when not using cgo or SWIG`又是一顿搜索
+5. 最后解决方式为把`go1.7`解压到`/usr/lib`目录下配置好环境变量，编译成功，mac下载客户端运行成功 
+
+**没用docker的流程大概是这样**
+
+{% asset_img flow_1.png %}
+
+由于是用apache规矩规则进行代理，只有一个公网域名的情况下，通过根目录子目录不同进行不同代理例如`wx.winneroad.cn/jl`代理到我的服务器,但是这样
+会引发一些问题，例如再用tp5进行`url函数`进行url生成的时候`/`会直接把域名下的`jl`顶掉，最好再解析一个域名到原服务器
+
+**一些配置截图**
+
+**apache**
+
+{% asset_img apache.png %}
+
+**ngrokd**
+
+{% asset_img ngrokd.png %}
+
+**服务器hosts**
+
+{% asset_img server_hosts.png %}
+
+**ngrok客户端连接**
+
+{% asset_img ngrok.png %}
+
+[1]: {{ '/static/img/2018-04-16/flow.png' | absolute_url }}
+[2]: {{ '/static/img/2018-04-16/flow1.png' | absolute_url }}
+[3]: {{ '/static/img/2018-04-16/apache.png' | absolute_url }}
+[4]: {{ '/static/img/2018-04-16/ngrokd.png' | absolute_url }}
+[5]: {{ '/static/img/2018-04-16/server_hosts.png' | absolute_url }}
+[6]: {{ '/static/img/2018-04-16/ngrok.png' | absolute_url }}
