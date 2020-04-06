@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[三角形最小路径和]]></title>
+    <url>%2F2020%2F04%2F06%2F%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C%2F</url>
+    <content type="text"><![CDATA[经典动态规划：三角形最小路径和 题目给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。 例如，给定三角形： [ [2], [3,4], [6,5,7], [4,1,8,3] ] 自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。 思路最优子结构从上至下每个点的最小路径和为当前点+min(相邻行左点最小路径和,相邻行右点的最小路径和) 状态变化行数n的变化,以及当前行点索引的变化 状态转移方程 dp(n,index) = a[n-1][index] + min(dp(n+1,index), dp(n+1,index+1)) base问题n = 层数，最小值为当前行索引值 重叠子问题某行某个点的最小路径和 php版本class Solution { private $table=[]; private $floor = 0; /** * @param Integer[][] $triangle * @return Integer */ function minimumTotal($triangle) { $this->floor = count($triangle); //从第一层,索引为0开始 return $this->minimumTotal2($triangle,1,0); } /** * n层数，index层索引 **/ function minimumTotal2(&amp;$triangle,$n,$index): int{ if($n == $this->floor){ return $triangle[$n-1][$index]; } //重叠子问题 if(isset($this->table[$n+1][$index])){ $a = $this->table[$n+1][$index]; }else{ $a = $this->minimumTotal2($triangle,$n+1,$index); $this->table[$n+1][$index] = $a; } if(isset($this->table[$n+1][$index + 1])){ $b = $this->table[$n+1][$index + 1]; }else{ $b = $this->minimumTotal2($triangle,$n+1,$index + 1); $this->table[$n+1][$index + 1] = $b; } $min = $a > $b ? $b: $a; //当前行点加上最小值 $ret = $triangle[$n-1][$index] + $min; return $ret; } } //最优子结构 //从上至下每个点的最小路径和为当前点+min(相邻行左点最小路径和,相邻行右点的最小路径和) //状态变化 //行数n的变化,以及当前行点索引的变化 //状态转移方程 // dp(n,index) = a[n-1][index] + min(dp(n+1,index), dp(n+1,index+1)) //base问题 //n = 层数，最小值为当前行索引值 //重叠子问题 //某行某个点的最小路径和 golang版本func minimumTotal(triangle [][]int) int { dp := make([][]int, len(triangle)) for i,_ := range triangle { dp[i] = make([]int,len(triangle[i])) } triangleIndex := make([]int,len(triangle)) triangleIndexLen := len(triangle) for i,v := range triangle { triangleIndex[i] = len(v) } return Step(0, 0, triangle,triangleIndex,&amp;triangleIndexLen, dp) } func Step(row int, col int, triangle [][]int,triangleIndex []int,triangleIndexLen *int, dp [][]int) int { if *triangleIndexLen == row || triangleIndex[row] == col { return 0 } if dp[row][col] != 0 { return dp[row][col] } a := Step(row+1, col, triangle,triangleIndex,triangleIndexLen,dp) b := Step(row+1, col+1, triangle,triangleIndex,triangleIndexLen, dp) if a > b { dp[row][col] = b + triangle[row][col] }else{ dp[row][col] = a + triangle[row][col] } return dp[row][col] }]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[打家劫舍]]></title>
     <url>%2F2020%2F04%2F06%2F%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D%2F</url>
     <content type="text"><![CDATA[经典动态规划：打家劫舍 题目你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。 示例 1: 输入: [1,2,3,1]输出: 4解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。 偷窃到的最高金额 = 1 + 3 = 4 。示例 2: 输入: [2,7,9,3,1]输出: 12解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。 偷窃到的最高金额 = 2 + 9 + 1 = 12 思路第n间房子要么偷，要么不偷如果偷第n间房子，最大金额=第n间房子金额+第n-2间房子以前所有房子的最大金额如果不偷第n间房子，最大金额=n-1间房子以前能偷房子的最大金额 最优子结构： 非相邻房子金额的最大值状态变化： 房子的数量状态转移方程： dp(n) = max(a[n-1] + dp(n-2), dp(n-1)) n&gt;=0base条件： n=0为0，n=1为a[0]重叠子问题： 需要前n间房能偷得最大金额表 php版本class Solution { private $table = []; /** * @param Integer[] $nums * @return Integer */ function rob($nums) { return $this->steal($nums,count($nums)); } function steal(&amp;$nums,$n): int{ if($n == 0){ return 0; }elseif($n == 1){ return $nums[0]; } //重叠子问题 if(isset($this->table[$n])){ $max = $this->table[$n]; }else{ $max = $nums[$n-1] + $this->steal($nums,$n-2); $this->table[$n] = $max; } if(isset($this->table[$n-1])){ $max2 = $this->table[$n-1]; }else{ $max2 = $this->steal($nums, $n-1); $this->table[$n-1] = $max2; } return $max > $max2 ? $max: $max2; } } golang版本var table map[int]int func rob(nums []int) int { table = make(map[int]int) return steal(nums,len(nums)) } func steal(nums []int, n int) int{ if n == 0 { return 0 } if n == 1 { return nums[0] } var max1,max2 int if v,exist := table[n];exist { max1 = v }else{ max1 = nums[n-1] + steal(nums,n-2) table[n] = max1 } if v,exist := table[n-1];exist { max2 = v }else{ max2 = steal(nums,n-1) table[n-1] = max2 } if max1 &lt; max2 { return max2 }else{ return max1 } }]]></content>
@@ -308,14 +319,14 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[工厂方法与抽象工厂模式]]></title>
-    <url>%2F2018%2F01%2F18%2F%E2%95%A3%C3%B1%E2%94%82%C2%BA%E2%95%96%E2%95%9C%E2%95%96%C2%BF%E2%95%99%CE%B4%E2%94%82%CE%98%E2%95%A7%E2%89%A4%E2%95%A3%C3%B1%E2%94%82%C2%BA%E2%94%80%C3%BA%E2%95%A9%E2%95%9C%2F</url>
-    <content type="text"><![CDATA[工厂方法uml类图 工厂方法的工厂是用来生成对象,如UML图,该工厂生成水果对象,每个子类工厂分别生产香蕉,橘子,和苹果对象 与简单工厂比,工厂方法将生成对象的过程延迟到子类,这样在有新类型对象加入的时候,可以增加新的工厂子类,而不是修改原方法,符合开放封闭原则 抽象工厂模式uml类图 抽象工厂模式是用来生成一些列相关对象的集合,如UML图,每个子类工厂同时实现两个方法,分别生产水果和饮料对象 水果和饮料有不同分类，水果可以生成饮料，两者相互有联系，通过这种方式既集成对象的封装，又增强了对象交互]]></content>
+    <title><![CDATA[canvas2d坐标系变换]]></title>
+    <url>%2F2018%2F01%2F18%2Fcanvas2d%E2%95%AB%C2%B0%E2%96%92%CE%A9%E2%95%A7%E2%95%A1%E2%96%92%CE%A3%E2%95%97%E2%95%97%2F</url>
+    <content type="text"><![CDATA[canvas 2d坐标系有三类变换,平移,缩放,旋转。尽管三类变换提供了三个不同的函数分别进行处理,但也提供了额外简单的函数对所有变换一起处理 transform 与 setTransform这两个函数参数是一致的,绘制坐标系的方式不同 transform 函数对当前坐标系的基础上进行变换 setTransform 对单位矩阵进行变换 参数transform(a,b,c,d,e,f) x1 = ax + cy + e; y1 = bx + dy + f; 坐标系平移:(1,0,0,1,50,50) x1 = x + 50; y1 = y + 50; 坐标系原点 x轴和y轴都平移50个像素 坐标系缩放:(2,0,0,2,0,0) x1 = 2x; y1 = 2y; 坐标系x,y同时放大两倍 坐标系旋转:(Math.cos(50 Math.PI / 180),Math.sin(50 Math.PI / 180), - Math.sin(50 Math.PI / 180),Math.cos(50 Math.PI / 180),0,0) x1 = Math.cos(50 Math.PI / 180) x - Math.sin(50 Math.PI / 180) y + e; y1 = Math.sin(50 Math.PI / 180) x + Math.cos(50 Math.PI / 180) y + f; 坐标系旋转50度]]></content>
       <categories>
-        <category>design_pattern</category>
+        <category>canvas</category>
       </categories>
       <tags>
-        <tag>design_pattern</tag>
+        <tag>canvas</tag>
       </tags>
   </entry>
   <entry>
@@ -327,14 +338,14 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[canvas2d坐标系变换]]></title>
-    <url>%2F2018%2F01%2F18%2Fcanvas2d%E2%95%AB%C2%B0%E2%96%92%CE%A9%E2%95%A7%E2%95%A1%E2%96%92%CE%A3%E2%95%97%E2%95%97%2F</url>
-    <content type="text"><![CDATA[canvas 2d坐标系有三类变换,平移,缩放,旋转。尽管三类变换提供了三个不同的函数分别进行处理,但也提供了额外简单的函数对所有变换一起处理 transform 与 setTransform这两个函数参数是一致的,绘制坐标系的方式不同 transform 函数对当前坐标系的基础上进行变换 setTransform 对单位矩阵进行变换 参数transform(a,b,c,d,e,f) x1 = ax + cy + e; y1 = bx + dy + f; 坐标系平移:(1,0,0,1,50,50) x1 = x + 50; y1 = y + 50; 坐标系原点 x轴和y轴都平移50个像素 坐标系缩放:(2,0,0,2,0,0) x1 = 2x; y1 = 2y; 坐标系x,y同时放大两倍 坐标系旋转:(Math.cos(50 Math.PI / 180),Math.sin(50 Math.PI / 180), - Math.sin(50 Math.PI / 180),Math.cos(50 Math.PI / 180),0,0) x1 = Math.cos(50 Math.PI / 180) x - Math.sin(50 Math.PI / 180) y + e; y1 = Math.sin(50 Math.PI / 180) x + Math.cos(50 Math.PI / 180) y + f; 坐标系旋转50度]]></content>
+    <title><![CDATA[工厂方法与抽象工厂模式]]></title>
+    <url>%2F2018%2F01%2F18%2F%E2%95%A3%C3%B1%E2%94%82%C2%BA%E2%95%96%E2%95%9C%E2%95%96%C2%BF%E2%95%99%CE%B4%E2%94%82%CE%98%E2%95%A7%E2%89%A4%E2%95%A3%C3%B1%E2%94%82%C2%BA%E2%94%80%C3%BA%E2%95%A9%E2%95%9C%2F</url>
+    <content type="text"><![CDATA[工厂方法uml类图 工厂方法的工厂是用来生成对象,如UML图,该工厂生成水果对象,每个子类工厂分别生产香蕉,橘子,和苹果对象 与简单工厂比,工厂方法将生成对象的过程延迟到子类,这样在有新类型对象加入的时候,可以增加新的工厂子类,而不是修改原方法,符合开放封闭原则 抽象工厂模式uml类图 抽象工厂模式是用来生成一些列相关对象的集合,如UML图,每个子类工厂同时实现两个方法,分别生产水果和饮料对象 水果和饮料有不同分类，水果可以生成饮料，两者相互有联系，通过这种方式既集成对象的封装，又增强了对象交互]]></content>
       <categories>
-        <category>canvas</category>
+        <category>design_pattern</category>
       </categories>
       <tags>
-        <tag>canvas</tag>
+        <tag>design_pattern</tag>
       </tags>
   </entry>
   <entry>
@@ -360,9 +371,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[js图片上传预览]]></title>
-    <url>%2F2018%2F01%2F16%2Fjs%E2%95%90%E2%95%9D%E2%95%9E%C2%BC%E2%95%94%E2%95%A7%E2%94%A4%C2%BD%E2%95%98%C3%B1%E2%94%94%E2%94%94%2F</url>
-    <content type="text"><![CDATA[define(['jquery'], function ($) { return function () { //图片上传预览 this.imgPreview = function (fileDom, previewBox) { if (window.FileReader) { var reader = new FileReader(); } else { alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！"); } //获取文件 var file = fileDom[0].files[0]; var imageType = /^image\//; //是否是图片 if (!imageType.test(file.type)) { alert("请选择图片！"); return; } //读取完成 reader.onload = function (e) { //获取图片dom var img = previewBox[0]; //图片路径设置为读取的图片 img.src = e.target.result; }; reader.readAsDataURL(file); }; //多图上传预览 this.mulImgPreview = function (fileDom, preview) { //图片地址容器 var imagesUrl = []; //清空预览容器 preview.html(''); var files = fileDom[0].files, objUrl; for (var i = 0; i &lt; files.length; i++) { objUrl = this.getObjectURL(files[i]); if (objUrl) { imagesUrl.push(objUrl); } } //将图片放置在容器中 for (var j = 0; j &lt; imagesUrl.length; j++) { preview.append($("&lt;img/>").attr('src', imagesUrl[j]).attr({width:200,height:200})).append('&amp;nbsp;'); } }; this.getObjectURL = function (file) { //建立一個可存取到該file的url var url = null; if (window.createObjectURL != undefined) { // basic url = window.createObjectURL(file); } else if (window.URL != undefined) { // mozilla(firefox) url = window.URL.createObjectURL(file); } else if (window.webkitURL != undefined) { // webkit or chrome url = window.webkitURL.createObjectURL(file); } return url; } }; });]]></content>
+    <title><![CDATA[复制内容到剪切板]]></title>
+    <url>%2F2018%2F01%2F16%2Fjs%E2%95%95%E2%94%A4%E2%95%93%E2%95%9E%E2%94%80%E2%94%8C%E2%95%9A%E2%96%8C%E2%95%A1%E2%95%9C%E2%95%9D%E2%8C%A0%E2%95%9F%E2%95%A8%E2%96%91%CF%83%2F</url>
+    <content type="text"><![CDATA[var content="我是内容"; var temp = $("&lt;input type='text' value='" + content + "'/>"); temp.appendTo('body'); temp.select(); if(document.execCommand('copy')){ layer.msg('media_id已复制到剪切板！'); }else{ layer.msg('复制到剪切板失败！'); } temp.remove();]]></content>
       <categories>
         <category>javascript</category>
       </categories>
@@ -379,9 +390,9 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[复制内容到剪切板]]></title>
-    <url>%2F2018%2F01%2F16%2Fjs%E2%95%95%E2%94%A4%E2%95%93%E2%95%9E%E2%94%80%E2%94%8C%E2%95%9A%E2%96%8C%E2%95%A1%E2%95%9C%E2%95%9D%E2%8C%A0%E2%95%9F%E2%95%A8%E2%96%91%CF%83%2F</url>
-    <content type="text"><![CDATA[var content="我是内容"; var temp = $("&lt;input type='text' value='" + content + "'/>"); temp.appendTo('body'); temp.select(); if(document.execCommand('copy')){ layer.msg('media_id已复制到剪切板！'); }else{ layer.msg('复制到剪切板失败！'); } temp.remove();]]></content>
+    <title><![CDATA[js图片上传预览]]></title>
+    <url>%2F2018%2F01%2F16%2Fjs%E2%95%90%E2%95%9D%E2%95%9E%C2%BC%E2%95%94%E2%95%A7%E2%94%A4%C2%BD%E2%95%98%C3%B1%E2%94%94%E2%94%94%2F</url>
+    <content type="text"><![CDATA[define(['jquery'], function ($) { return function () { //图片上传预览 this.imgPreview = function (fileDom, previewBox) { if (window.FileReader) { var reader = new FileReader(); } else { alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！"); } //获取文件 var file = fileDom[0].files[0]; var imageType = /^image\//; //是否是图片 if (!imageType.test(file.type)) { alert("请选择图片！"); return; } //读取完成 reader.onload = function (e) { //获取图片dom var img = previewBox[0]; //图片路径设置为读取的图片 img.src = e.target.result; }; reader.readAsDataURL(file); }; //多图上传预览 this.mulImgPreview = function (fileDom, preview) { //图片地址容器 var imagesUrl = []; //清空预览容器 preview.html(''); var files = fileDom[0].files, objUrl; for (var i = 0; i &lt; files.length; i++) { objUrl = this.getObjectURL(files[i]); if (objUrl) { imagesUrl.push(objUrl); } } //将图片放置在容器中 for (var j = 0; j &lt; imagesUrl.length; j++) { preview.append($("&lt;img/>").attr('src', imagesUrl[j]).attr({width:200,height:200})).append('&amp;nbsp;'); } }; this.getObjectURL = function (file) { //建立一個可存取到該file的url var url = null; if (window.createObjectURL != undefined) { // basic url = window.createObjectURL(file); } else if (window.URL != undefined) { // mozilla(firefox) url = window.URL.createObjectURL(file); } else if (window.webkitURL != undefined) { // webkit or chrome url = window.webkitURL.createObjectURL(file); } return url; } }; });]]></content>
       <categories>
         <category>javascript</category>
       </categories>
