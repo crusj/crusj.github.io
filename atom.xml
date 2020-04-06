@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jl.js.org/"/>
-  <updated>2020-04-06T04:20:03.514Z</updated>
+  <updated>2020-04-06T08:24:12.524Z</updated>
   <id>http://jl.js.org/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>redis笔记</title>
+    <link href="http://jl.js.org/2020/04/06/redis%E7%AC%94%E8%AE%B0/"/>
+    <id>http://jl.js.org/2020/04/06/redis笔记/</id>
+    <published>2020-04-06T07:53:38.000Z</published>
+    <updated>2020-04-06T08:24:12.524Z</updated>
+    
+    <content type="html"><![CDATA[<p>redis常见知识点整理<br><a id="more"></a></p><h3 id="redis基本数据类型"><a href="#redis基本数据类型" class="headerlink" title="redis基本数据类型"></a>redis基本数据类型</h3><h4 id="string"><a href="#string" class="headerlink" title="string"></a>string</h4><ul><li><code>set key value</code>、set will replace the exists key、max value 512M，<code>set key value nx</code>,设置key,且key不存在,<code>set key value xx</code>设置key,且key存在</li><li><code>get key</code> </li><li>自增<code>incr key</code>,自增定义步长<code>incrby key  step</code></li><li>自减<code>decr key</code>,自减定义步长<code>decrby key  step</code></li><li>INCR is atomic， never race condition</li><li>设置多个值<code>mset key1 value key2 value</code></li><li>获取多个值<code>mget key1 key2</code></li><li>判断值是否存在<code>exists key</code>，return 1|0</li><li>删除值<code>del key</code></li><li>值类型<code>type key</code></li><li>设置过期时间 <code>set key value ex second</code>、<code>expire key second</code></li><li>查看剩余存活时间<code>ttl key</code></li></ul><h4 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h4><ul><li>设置单个值<code>hset key field value</code></li><li>设置多个值<code>hmset key field value field value</code></li><li>获取单个值<code>hget key field</code></li><li>获取多个值 <code>hmget key field1 field2</code></li><li>field是否存在<code>hexists key field</code></li><li>获取所有 <code>hgetall key</code></li><li>获取所有field<code>hkeys key</code></li><li>获取field数量<code>hlen key</code></li><li>删除值<code>hdel key field1 [field2]</code></li><li>自增<code>hincrby key field step</code></li></ul><h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><blockquote><p> Redis lists are implemented via Linked Lists</p></blockquote><ul><li>左边插入<code>lpush key value</code>,多值插入<code>lpush key value1 value2</code></li><li>右边插入<code>rpush key value</code>,多值插入<code>rpush key value1 value2</code></li><li>根据index获取值 <code>lindex key index</code></li><li>范围查找<code>lrange start end</code> start从0开始,end为-1代表最后一个元素，-2代表倒数第二个元素</li><li>pop element <code>lpop key</code> 、<code>rpop key</code></li><li>列表长度<code>llen key</code></li><li>根据index设置值<code>lset key index value</code></li><li>可以通过lpush的方式来保存一些最新的信息，提高访问速度</li><li>修剪长度<code>ltrim key start end</code></li><li>pop阻塞<code>brpop key timeout</code>、<code>blpop key timeout</code>， use 0 as timeout is forever</li><li>删除列表 <code>del key</code></li></ul><h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><blockquote><p>集合其实就是一个value为null的hash表</p></blockquote><ul><li>设置集合<code>sadd key value [value...]</code></li><li>查看集合<code>smember key</code></li><li>是否集合成员<code>sismember key value</code></li><li>获取集合成员数<code>scard key</code></li><li>集合差集<code>sdiff key1 key2</code></li><li>集合交集<code>sinter key1 key2</code></li><li>返回多个集合的并集<code>sunion key1 [key2]</code></li><li>移除集合中的一个随机成员<code>spop key</code></li><li>获取集合中一个或多个集合成员<code>srandmember key [count]</code></li><li>移除集合中一个或多个成员<code>srem key member1 [member2]</code></li></ul><h4 id="sort-set"><a href="#sort-set" class="headerlink" title="sort set"></a>sort set</h4><ul><li>相比集合多了一个score,指向集合的值</li></ul><h3 id="redis-server"><a href="#redis-server" class="headerlink" title="redis-server"></a>redis-server</h3><ul><li>启动指定配置配件<code>redis-server ./redis.conf&amp;</code></li></ul><h3 id="redis-cli操作"><a href="#redis-cli操作" class="headerlink" title="redis-cli操作"></a>redis-cli操作</h3><ul><li>查看配置信息<code>config get [pattern]</code>,例如查看dir目录<code>config get dir</code>、查看所有配置<code>config get *</code></li><li>查看某个key<code>keys [pattren]</code>,查看所有keys<code>keys *</code></li><li>保存数据到磁盘,<code>bgsave</code>会fork一个子进程后台保存数据到磁盘、<code>save</code>直接保存</li><li>查看主从信息,<code>info replication</code></li></ul><h3 id="redis主从"><a href="#redis主从" class="headerlink" title="redis主从"></a>redis主从</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>每次slave发送sync命令到master,master运行bgsave保存数据到文件,并记录这段时间的命令，然后把文件和命令发送给slave,slave抛弃以前数据进行恢复,这是slave只能读</p><h4 id="主服务器"><a href="#主服务器" class="headerlink" title="主服务器"></a>主服务器</h4><p>设置权限验证<code>masterauth 123456</code></p><h4 id="从服务器"><a href="#从服务器" class="headerlink" title="从服务器"></a>从服务器</h4><ul><li>redis slave <code>slaveof ip port</code>,</li><li>如果master设置了权限<code>masterauth 123456</code></li></ul><h3 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h3><h4 id="aof"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>将每条命令写到文件，redis启动时执行这些命令,默认关闭,如果开启redis会优先加载aof文件</p><h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><pre><code>appendonly yesappendfsync always|eversec|no</code></pre><p>always,每个命令立即保存<br>eversec,每秒保存<br>no,操作系统自己控制</p><h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>文件臃肿,恢复效率慢</p><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>数据持久化更安全</p><h4 id="rdb快照"><a href="#RDB快照" class="headerlink" title="RDB快照"></a>RDB快照</h4><h5 id="简介"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h5><p>保存某个时间节点的快早</p><h5 id="配置"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h5><pre><code>save &lt;second&gt; &lt;changes&gt;</code></pre><p>每过多少秒至少有多少个改动则保存快照</p><h5 id="缺点"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><p>一段时间内丢失</p><h4 id="优点"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p>数据精简，恢复快</p><h3 id="redis数据淘汰机制"><a href="#redis数据淘汰机制" class="headerlink" title="redis数据淘汰机制"></a>redis数据淘汰机制</h3><h4 id="内存设置"><a href="#内存设置" class="headerlink" title="内存设置"></a>内存设置</h4><p><code>maxmemory 100mb</code></p><h4 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h4><p><code>maxmemory-policy noeviction</code></p><ul><li>noeviction:默认策略，不淘汰，如果内存已满，添加数据是报错。 </li><li>allkeys-lru:在所有键中，选取最近最少使用的数据抛弃。 </li><li>volatile-lru:在设置了过期时间的所有键中，选取最近最少使用的数据抛弃。 </li><li>allkeys-random: 在所有键中，随机抛弃。 </li><li>volatile-random: 在设置了过期时间的所有键，随机抛弃。 </li><li>volatile-ttl:在设置了过期时间的所有键，抛弃存活时间最短的数据。</li></ul><h3 id="一些场景"><a href="#一些场景" class="headerlink" title="一些场景"></a>一些场景</h3><h4 id="redis实现锁"><a href="#redis实现锁" class="headerlink" title="redis实现锁"></a>redis实现锁</h4><p>1）SETNX命令（SET if Not eXists）</p><p>语法：SETNX key value</p><p>功能：当且仅当 key 不存在，将 key 的值设为 value ，并返回1；若给定的 key 已经存在，则 SETNX 不做任何动作，并返回0。</p><p>2）expire命令</p><p>语法：expire KEY seconds </p><p>功能：设置key的过期时间。如果key已过期，将会被自动删除。</p><p>3）DEL命令</p><p>语法：DEL key [KEY …]</p><p>功能：删除给定的一个或多个 key ,不存在的 key 会被忽略</p><h4 id="利用set查重"><a href="#利用set查重" class="headerlink" title="利用set查重"></a>利用set查重</h4><h4 id="利用list实现队列"><a href="#利用list实现队列" class="headerlink" title="利用list实现队列"></a>利用list实现队列</h4>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;redis常见知识点整理&lt;br&gt;
+    
+    </summary>
+    
+      <category term="redis笔记" scheme="http://jl.js.org/categories/redis%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="redis 面试" scheme="http://jl.js.org/tags/redis-%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>三角形最小路径和</title>
@@ -421,33 +443,6 @@
     
     
       <category term="middleware" scheme="http://jl.js.org/tags/middleware/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>函数型接口</title>
-    <link href="http://jl.js.org/2018/09/17/%E2%95%91%C2%BB%E2%95%A9%C2%B2%E2%95%A8%E2%95%90%E2%95%9C%E2%95%99%E2%94%90%E2%94%8C/"/>
-    <id>http://jl.js.org/2018/09/17/║»╩²╨═╜╙┐┌/</id>
-    <published>2018-09-16T16:00:00.000Z</published>
-    <updated>2019-03-05T05:26:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>golang中只要类型实现了接口包含的所有抽象方法。那么该类型便属于该接口的实现类</p><blockquote><p>函数型接口： 某个函数类型作为接收者实现了接口方法</p></blockquote><p>个人理解，函数形接口主要是类似于面向接口编程中，调用实现接口的方法而完成多态，但又不像传统面向接口编程那样显得臃肿，<br>需要先声明类继承接口然后在类中实现方法，golang中任何与接口方法签名相同的函数都可以作为被调用者。</p><hr><p><strong>demo为计算一个二位数组，每个子项数组的和，然后返回结果数组,例如[[1,2,3],[4,5,6],[7,8,9]] 返回[6,15,24]</strong></p><hr><h2 id="面向接口编程"><a href="#面向接口编程" class="headerlink" title="面向接口编程"></a>面向接口编程</h2><p><strong>首先实现传统的面向接口编程：</strong></p><ul><li>声明接口</li><li>声明一个类型，实现接口函数</li></ul><pre class="line-numbers language-golang"><code class="language-golang">// 计算接口type Sum interface {    Add(m map[int][]int) map[int]int}//声明类型用来实现接口type R stringfunc (r R) Add(m map[int][]int) (n map[int]int){    n = make(map[int]int)    if m != nil && len(m) > 0 {        for i,v := range m {            if v == nil || len(v) == 0 {                n[i] = 0            } else {                n[i] = 0                for _,v1 := range v {                    n[i] = n[i] + v1                }            }        }    }    return}// 调用func Call(m map[int][]int, sum Sum) map[int]int{    return sum.Add(m)}func main() {    m := make(map[int][]int)    m[0] = []int{1,2,3}    m[1] = []int{4,5,6}    m[2] = []int{7,8,9}    re := Call(m, R("demo"))    fmt.Printf("%v", re)}// 结果map[2:24 0:6 1:15]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>以上为典型的面向接口编程，Call函数依赖抽象接口类型Sum,R实现接口，作为参数传递给Call</p><p>但是这里R类型似乎是多余的，因为golang并没有所谓class关键字，必须要又一种类型来作为接受者来实现对应Sum接口的方法<br>而且类的实现有一些多余</p><h2 id="函数型接口"><a href="#函数型接口" class="headerlink" title="函数型接口"></a>函数型接口</h2><p><strong>声明函数类型</strong></p><pre class="line-numbers language-golang"><code class="language-golang">// 计算接口type Sum interface {    Add(m map[int][]int) map[int]int}// 声明函数type Handle func(map[int][]int) map[int]intfunc (h Handle) Add(m map[int][]int) map[int]int {    return h(m)}// 调用不变func Call(m map[int][]int, sum Sum) map[int]int{    return sum.Add(m)}// 我的方法进行处理func myHandle(m map[int][]int) map[int]int{    n := make(map[int]int)    if m != nil && len(m) > 0 {        for i,v := range m {            if v == nil || len(v) == 0 {                n[i] = 0            } else {                n[i] = 0                for _,v1 := range v {                    n[i] = n[i] + v1                }            }        }    }    return n}func main() {    m := make(map[int][]int)    m[0] = []int{1,2,3}    m[1] = []int{4,5,6}    m[2] = []int{7,8,9}    re := Call(m, Handle(myHandle))//讲myHandle转换为Handle类型，赋值给Sum类型变量    fmt.Printf("%v", re)}//结果map[0:6 1:15 2:24]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>分析</strong></p><ul><li>以上没有多余的类型R,而且只要实现任意与Handle签名相同的函数,都可以将其转换为Handle类型，而Handle又实现了<br>接口Sum，</li><li>整个流程 Call() =&gt; Sum.Add() =&gt; myHandle()</li><li>我们就只需要在调用Call实现Handle签名函数，与Sum接口解耦</li></ul><h3 id="整理"><a href="#整理" class="headerlink" title="整理"></a>整理</h3><pre class="line-numbers language-golang"><code class="language-golang">type SumIn map[int][]inttype SumOut map[int]inttype Sum interface {    Add(SumIn) SumOut}//声明函数type Handle func(SumIn) SumOutfunc (h Handle) Add(m SumIn) SumOut {    return h(m)}// 调用func Call(m SumIn, sum Sum) SumOut {    return sum.Add(m)}//内部进行类型转换func CallFunc(m SumIn,f func(SumIn) SumOut) SumOut{    return Call(m,Handle(f)) }// 我的方法进行处理func myHandle(m SumIn) SumOut {    n := make(SumOut)    if m != nil && len(m) > 0 {        for i,v := range m {            if v == nil || len(v) == 0 {                n[i] = 0            } else {                n[i] = 0                for _,v1 := range v {                    n[i] = n[i] + v1                }            }        }    }    return n}func main() {    m := make(SumIn)    m[0] = []int{1,2,3}    m[1] = []int{4,5,6}    m[2] = []int{7,8,9}    re := CallFunc(m, myHandle)//内部进行转换    fmt.Printf("%v", re)}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><strong>分析</strong></p><ul><li>主要对Call函数进行了封装将Handle签名相同的函数转换，换到了内部，不需要在调用进行转换和定义了类型别名</li><li>这种函数型接口相当于对接口的功能实现进行了热拔插，适用于只有一个方法的接口</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;golang中只要类型实现了接口包含的所有抽象方法。那么该类型便属于该接口的实现类&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;函数型接口： 某个函数类型作为接收者实现了接口方法&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;个人理解，函数形接口主要是类似于面向接口编程中，调用实现
-      
-    
-    </summary>
-    
-      <category term="golang" scheme="http://jl.js.org/categories/golang/"/>
-    
     
   </entry>
   
