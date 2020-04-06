@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="远方">
 <meta property="og:description" content="redis常见知识点整理">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-04-06T08:24:12.524Z">
+<meta property="og:updated_time" content="2020-04-06T08:28:11.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis笔记">
 <meta name="twitter:description" content="redis常见知识点整理">
@@ -1982,7 +1982,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff4a81;
+  background: #ff0529;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3237,7 +3237,7 @@ body {
           
           <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>Category</a>
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
   </li>
         
         
@@ -3245,7 +3245,7 @@ body {
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archive</a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
   </li>
 
       
@@ -3255,7 +3255,7 @@ body {
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>search</a>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
         </li>
       
     </ul>
@@ -3360,14 +3360,14 @@ body {
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Readtime</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2020-04-06 15:53:38 / Updated at: 16:24:12" itemprop="dateCreated datePublished" datetime="2020-04-06T15:53:38+08:00">2020-04-06</time>
+              <time title="Created: 2020-04-06 15:53:38 / Modified: 16:28:11" itemprop="dateCreated datePublished" datetime="2020-04-06T15:53:38+08:00">2020-04-06</time>
             
 
             
@@ -3386,7 +3386,7 @@ body {
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/redis笔记/" itemprop="url" rel="index"><span itemprop="name">redis笔记</span></a></span>
@@ -3537,12 +3537,12 @@ body {
 appendfsync always|eversec|no
 </code></pre><p>always,每个命令立即保存<br>eversec,每秒保存<br>no,操作系统自己控制</p>
 <h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>文件臃肿,恢复效率慢</p>
-<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>数据持久化更安全</p>
+<h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><p>数据持久化更安全</p>
 <h4 id="rdb快照"><a href="#RDB快照" class="headerlink" title="RDB快照"></a>RDB快照</h4><h5 id="简介"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h5><p>保存某个时间节点的快早</p>
 <h5 id="配置"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h5><pre><code>save &lt;second&gt; &lt;changes&gt;
 </code></pre><p>每过多少秒至少有多少个改动则保存快照</p>
 <h5 id="缺点"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><p>一段时间内丢失</p>
-<h4 id="优点"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p>数据精简，恢复快</p>
+<h5 id="优点"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h5><p>数据精简，恢复快</p>
 <h3 id="redis数据淘汰机制"><a href="#redis数据淘汰机制" class="headerlink" title="redis数据淘汰机制"></a>redis数据淘汰机制</h3><h4 id="内存设置"><a href="#内存设置" class="headerlink" title="内存设置"></a>内存设置</h4><p><code>maxmemory 100mb</code></p>
 <h4 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h4><p><code>maxmemory-policy noeviction</code></p>
 <ul>
@@ -3658,10 +3658,10 @@ appendfsync always|eversec|no
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -3684,7 +3684,7 @@ appendfsync always|eversec|no
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">Posts</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -3719,7 +3719,7 @@ appendfsync always|eversec|no
                       
                     
                     <span class="site-state-item-count">11</span>
-                    <span class="site-state-item-name">Category</span>
+                    <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
               
@@ -3782,7 +3782,7 @@ appendfsync always|eversec|no
                       
                     
                     <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">Tags</span>
+                    <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
               
@@ -3838,7 +3838,7 @@ appendfsync always|eversec|no
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis基本数据类型"><span class="nav-number">1.</span> <span class="nav-text">redis基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#string"><span class="nav-number">1.1.</span> <span class="nav-text">string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hash"><span class="nav-number">1.2.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list"><span class="nav-number">1.3.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">1.4.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sort-set"><span class="nav-number">1.5.</span> <span class="nav-text">sort set</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-server"><span class="nav-number">2.</span> <span class="nav-text">redis-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-cli操作"><span class="nav-number">3.</span> <span class="nav-text">redis-cli操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis主从"><span class="nav-number">4.</span> <span class="nav-text">redis主从</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">4.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主服务器"><span class="nav-number">4.2.</span> <span class="nav-text">主服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从服务器"><span class="nav-number">4.3.</span> <span class="nav-text">从服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据备份"><span class="nav-number">5.</span> <span class="nav-text">数据备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#aof"><span class="nav-number">5.1.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-number">5.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置"><span class="nav-number">5.1.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">5.1.3.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">5.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rdb快照"><span class="nav-number">5.3.</span> <span class="nav-text">RDB快照</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-number">5.3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置"><span class="nav-number">5.3.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">5.3.3.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">5.4.</span> <span class="nav-text">优点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis数据淘汰机制"><span class="nav-number">6.</span> <span class="nav-text">redis数据淘汰机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内存设置"><span class="nav-number">6.1.</span> <span class="nav-text">内存设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#淘汰策略"><span class="nav-number">6.2.</span> <span class="nav-text">淘汰策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些场景"><span class="nav-number">7.</span> <span class="nav-text">一些场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis实现锁"><span class="nav-number">7.1.</span> <span class="nav-text">redis实现锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用set查重"><span class="nav-number">7.2.</span> <span class="nav-text">利用set查重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用list实现队列"><span class="nav-number">7.3.</span> <span class="nav-text">利用list实现队列</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis基本数据类型"><span class="nav-number">1.</span> <span class="nav-text">redis基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#string"><span class="nav-number">1.1.</span> <span class="nav-text">string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hash"><span class="nav-number">1.2.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list"><span class="nav-number">1.3.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">1.4.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sort-set"><span class="nav-number">1.5.</span> <span class="nav-text">sort set</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-server"><span class="nav-number">2.</span> <span class="nav-text">redis-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-cli操作"><span class="nav-number">3.</span> <span class="nav-text">redis-cli操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis主从"><span class="nav-number">4.</span> <span class="nav-text">redis主从</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">4.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主服务器"><span class="nav-number">4.2.</span> <span class="nav-text">主服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从服务器"><span class="nav-number">4.3.</span> <span class="nav-text">从服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据备份"><span class="nav-number">5.</span> <span class="nav-text">数据备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#aof"><span class="nav-number">5.1.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-number">5.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置"><span class="nav-number">5.1.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">5.1.3.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#优点"><span class="nav-number">5.1.4.</span> <span class="nav-text">优点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rdb快照"><span class="nav-number">5.2.</span> <span class="nav-text">RDB快照</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-number">5.2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置"><span class="nav-number">5.2.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">5.2.3.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#优点"><span class="nav-number">5.2.4.</span> <span class="nav-text">优点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis数据淘汰机制"><span class="nav-number">6.</span> <span class="nav-text">redis数据淘汰机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内存设置"><span class="nav-number">6.1.</span> <span class="nav-text">内存设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#淘汰策略"><span class="nav-number">6.2.</span> <span class="nav-text">淘汰策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些场景"><span class="nav-number">7.</span> <span class="nav-text">一些场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis实现锁"><span class="nav-number">7.1.</span> <span class="nav-text">redis实现锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用set查重"><span class="nav-number">7.2.</span> <span class="nav-text">利用set查重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用list实现队列"><span class="nav-number">7.3.</span> <span class="nav-text">利用list实现队列</span></a></li></ol></li></ol></div>
             
 
           </div>

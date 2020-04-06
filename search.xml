@@ -371,6 +371,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[git tips]]></title>
+    <url>%2F2018%2F01%2F16%2Fgit%20tips%2F</url>
+    <content type="text"><![CDATA[1.删除分支 本地: git branch -d branch_name 远程: git branch -r -d origin/branch_name &amp;&amp; git push origin(此处有个空格) :branch_name2.推送分支 git push origin local_branch_name:remote_branch_name 3.删除标签 本地: git tag -d tag_name 远程: git push origin :refs/tags/tag_name 4444.暂存 保存未提交的数据: git stash save message 查看暂存: git stash list 从栈中恢复，并从栈中删除: git stash pop index 从栈中回复，不从栈中删除：git stash apply index]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[js格式化手机号码格式]]></title>
     <url>%2F2018%2F01%2F16%2Fjs%E2%95%95%C2%B1%E2%95%A9%E2%95%9C%E2%95%97%C2%BB%E2%95%A9%E2%95%93%E2%95%97%C2%B7%E2%95%91%E2%94%BC%E2%94%AC%CE%B4%E2%95%95%C2%B1%E2%95%A9%E2%95%9C%2F</url>
     <content type="text"><![CDATA[var format_phone = function (number){ var no_space = number.replace(/\s/g,''), length = no_space.length, sep = ' ';//分割符号 if(length &lt;= 3){ return no_space; }else if(length > 3 &amp;&amp; length &lt;= 7){ return no_space.substr(0,3) + sep + no_space.substr(3); }else { return no_space.substr(0,3) + sep + no_space.substr(3, 4) + sep + no_space.substr(7); } };]]></content>
@@ -379,14 +390,14 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[利用取地址操作符，对数组子元素进行归类]]></title>
-    <url>%2F2018%2F01%2F16%2F%E2%94%94%E2%88%9A%E2%95%99%E2%94%9C%E2%95%A1%E2%95%AA%E2%95%93%E2%95%96%E2%96%93%E2%94%98%E2%95%AB%E2%89%88%E2%95%96%E2%88%9A%E2%95%A2%E2%95%98%E2%95%A9%C2%B2%E2%95%AB%CE%98%E2%95%AB%E2%95%99%E2%95%98%C2%AC%E2%95%A6%E2%95%AA%E2%95%9C%C2%B0%E2%95%A8%E2%95%A8%E2%95%A3%CE%98%E2%94%94%CE%B1%2F</url>
-    <content type="text"><![CDATA[$a_data = [ 1 => [ 'id' => 1, 'pid' => 0, 'data' => [] ], 2 => [ 'id' => 2, 'pid' => 1, 'data' => [] ], ]; $a_newData = []; foreach($a_data as $key => $v): if($v['pid'] !== 0): $a_data[$v['pid']['sub']][] = &amp;$a_data[$key]; else: $a_newData[] = &amp;$a_data[$key]; endif; endforeach;]]></content>
+    <title><![CDATA[复制内容到剪切板]]></title>
+    <url>%2F2018%2F01%2F16%2Fjs%E2%95%95%E2%94%A4%E2%95%93%E2%95%9E%E2%94%80%E2%94%8C%E2%95%9A%E2%96%8C%E2%95%A1%E2%95%9C%E2%95%9D%E2%8C%A0%E2%95%9F%E2%95%A8%E2%96%91%CF%83%2F</url>
+    <content type="text"><![CDATA[var content="我是内容"; var temp = $("&lt;input type='text' value='" + content + "'/>"); temp.appendTo('body'); temp.select(); if(document.execCommand('copy')){ layer.msg('media_id已复制到剪切板！'); }else{ layer.msg('复制到剪切板失败！'); } temp.remove();]]></content>
       <categories>
-        <category>php</category>
+        <category>javascript</category>
       </categories>
       <tags>
-        <tag>php pointer</tag>
+        <tag>js</tag>
       </tags>
   </entry>
   <entry>
@@ -401,25 +412,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[git tips]]></title>
-    <url>%2F2018%2F01%2F16%2Fgit%20tips%2F</url>
-    <content type="text"><![CDATA[1.删除分支 本地: git branch -d branch_name 远程: git branch -r -d origin/branch_name &amp;&amp; git push origin(此处有个空格) :branch_name2.推送分支 git push origin local_branch_name:remote_branch_name 3.删除标签 本地: git tag -d tag_name 远程: git push origin :refs/tags/tag_name 4444.暂存 保存未提交的数据: git stash save message 查看暂存: git stash list 从栈中恢复，并从栈中删除: git stash pop index 从栈中回复，不从栈中删除：git stash apply index]]></content>
+    <title><![CDATA[利用取地址操作符，对数组子元素进行归类]]></title>
+    <url>%2F2018%2F01%2F16%2F%E2%94%94%E2%88%9A%E2%95%99%E2%94%9C%E2%95%A1%E2%95%AA%E2%95%93%E2%95%96%E2%96%93%E2%94%98%E2%95%AB%E2%89%88%E2%95%96%E2%88%9A%E2%95%A2%E2%95%98%E2%95%A9%C2%B2%E2%95%AB%CE%98%E2%95%AB%E2%95%99%E2%95%98%C2%AC%E2%95%A6%E2%95%AA%E2%95%9C%C2%B0%E2%95%A8%E2%95%A8%E2%95%A3%CE%98%E2%94%94%CE%B1%2F</url>
+    <content type="text"><![CDATA[$a_data = [ 1 => [ 'id' => 1, 'pid' => 0, 'data' => [] ], 2 => [ 'id' => 2, 'pid' => 1, 'data' => [] ], ]; $a_newData = []; foreach($a_data as $key => $v): if($v['pid'] !== 0): $a_data[$v['pid']['sub']][] = &amp;$a_data[$key]; else: $a_newData[] = &amp;$a_data[$key]; endif; endforeach;]]></content>
       <categories>
-        <category>git</category>
+        <category>php</category>
       </categories>
       <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[复制内容到剪切板]]></title>
-    <url>%2F2018%2F01%2F16%2Fjs%E2%95%95%E2%94%A4%E2%95%93%E2%95%9E%E2%94%80%E2%94%8C%E2%95%9A%E2%96%8C%E2%95%A1%E2%95%9C%E2%95%9D%E2%8C%A0%E2%95%9F%E2%95%A8%E2%96%91%CF%83%2F</url>
-    <content type="text"><![CDATA[var content="我是内容"; var temp = $("&lt;input type='text' value='" + content + "'/>"); temp.appendTo('body'); temp.select(); if(document.execCommand('copy')){ layer.msg('media_id已复制到剪切板！'); }else{ layer.msg('复制到剪切板失败！'); } temp.remove();]]></content>
-      <categories>
-        <category>javascript</category>
-      </categories>
-      <tags>
-        <tag>js</tag>
+        <tag>php pointer</tag>
       </tags>
   </entry>
   <entry>
