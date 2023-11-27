@@ -16,12 +16,12 @@ flowchart LR
 ## 判断方式
 ```mermaid
 graph TD
-    A{捕获外部变量}
-    A-->|否|B[Fn]
-    A-->|是|C[FnOnce]
-    C-->D{移出变量所有权}
-    D-->|是|C
-    D-->|否|E[FnMut]-->F{改变变量值}
-    F-->|是|E
-    F-->|否|B
+    A{Catch var}
+    A-->|No|B[Fn]
+    A-->|Yes|C[FnOnce]
+    C-->D{Move var}
+    D-->|Yes|C
+    D-->|No|E[FnMut]-->F{Change var}
+    F-->|Yes|E
+    F-->|No|B
 ```
